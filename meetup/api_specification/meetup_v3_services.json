@@ -188,6 +188,26 @@
             "uri": "/recommended/groups/ignores/{urlname}",
             "notes": "Only the path parameter :urlname is required. You are limited to 100 of these requests in a 24 hour period of time."
         },
+        "CreateRsvp": {
+            "version": "3",
+            "name": "CreateRsvp",
+            "httpMethod": "POST",
+            "parameters": {
+                "response": {
+                    "location": "query",
+                    "required": true,
+                    "description": "The RSVP setting - value must be either \"yes\", \"no\" or \"waitlist\""
+                },
+                "event_id": {
+                    "location": "query",
+                    "required": true,
+                    "description": "The event that you are RSVP'ing to"
+                }
+            },
+            "summary": "Creates or updates an existing RSVP",
+            "uri": "/{urlname}/events/{event_id}/rsvps",
+            "notes": "At least one of the required parameter(s) must be supplied with the request.\n\nThe RSVP is recorded for the currently authenticated member account, unless a member_id is supplied, in which case the authenticated member must have permissions to edit the event or a host.\n\nMember's RSVP'ing as themselves may supply answers to a Meetup event's survey questions by supplying answers as request parameters corresponding to question ids in the format `answer_{question_id}`. To discover available Meetup event survey questions, supply the [Events 2](/meetup_api/docs/2/events/) method with the 'fields' parameter set to 'survey_questions'.\n\nRepeated attempts to RSVP to the same event given the same member credentials will result in an update to previous RSVP. The state of the event may or may not allow for this update to occur depending on the organizer-defined constraints and pre-requisites for the event.\n\nNote: waitlist responses may be coerced into yes responses when there is space available and yes responses may be coerced into waitlist response when space is not.\n\nIf the event requires payment you are required to send an \"agree_to_refund\" parameter set to the true or false. This represents the authorized members agreement to understanding the event's refund policy.\n"
+        },
         "CreateSelfAbuseReports": {
             "version": "3",
             "name": "CreateSelfAbuseReports",
@@ -597,6 +617,36 @@
             "summary": "A dashboard of aggregated Meetup information for the authorized member",
             "uri": "/dashboard",
             "notes": "no parameters are required"
+        },
+        "GetEvents": {
+            "version": "3",
+            "name": "GetEvents",
+            "httpMethod": "GET",
+            "parameters": {
+                "has_ended": {
+                    "location": "query",
+                    "required": false,
+                    "description": "returns events which have ended when true"
+                }
+            },
+            "summary": "Access Meetup events using a group, member, or event id. Events in private groups are available only to authenticated members of those groups. To search events by topic or location, see [Open Events](/meetup_api/docs/2/open_events).",
+            "uri": "/{urlname}/events",
+            "notes": "At least one of the required parameter(s) must be supplied with the request. Some groups, while remaining private, still wish to show some information about their events. You can include these events in results using the `limited_events` request parameter."
+        },
+        "GetEvent": {
+            "version": "3",
+            "name": "GetEvent",
+            "httpMethod": "GET",
+            "parameters": {
+                "id": {
+                    "location": "uri",
+                    "required": true,
+                    "description": null
+                }
+            },
+            "summary": "Retrieve a single meetup",
+            "uri": "/{urlname}/events/{id}",
+            "notes": "Only authorization parameters are needed. Some groups, while remaining private, still wish to show some information about their events. You can include these events in results using the `limited_events` request parameter."
         },
         "GetFindGroups": {
             "version": "3",
@@ -1312,6 +1362,21 @@
             "summary": "Returns venues Meetup finds relevant to you based on location and category. This method does not yet support sorting or pagination.",
             "uri": "/recommended/venues",
             "notes": "All parameters are optional. If you do not supply a location your request will be based on your IP's geographic location. If the server is unable to produce recommendations in a suitable amount of time, a 503 error will be returned."
+        },
+        "GetRsvps": {
+            "version": "2",
+            "name": "GetRsvps",
+            "httpMethod": "GET",
+            "parameters": {
+                "event_id": {
+                    "location": "query",
+                    "required": true,
+                    "description": "event id"
+                }
+            },
+            "summary": "Query for Event RSVPs by event",
+            "uri": "/{urlname}/events/{event_id}/rsvps",
+            "notes": "At least one of the required parameter(s) must be supplied with the request."
         },
         "GetSelfBlocks": {
             "version": "3",
