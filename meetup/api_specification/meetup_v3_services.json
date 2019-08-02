@@ -1364,7 +1364,7 @@
             "notes": "All parameters are optional. If you do not supply a location your request will be based on your IP's geographic location. If the server is unable to produce recommendations in a suitable amount of time, a 503 error will be returned."
         },
         "GetRsvps": {
-            "version": "2",
+            "version": "3",
             "name": "GetRsvps",
             "httpMethod": "GET",
             "parameters": {
