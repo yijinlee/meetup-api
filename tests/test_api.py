@@ -9,7 +9,7 @@ def api_client():
 
 
 def test_get_find_groups(api_client):
-    find_group_info = api_client.GetFindGroups()
+    find_group_info = api_client.FindGroups()
     assert isinstance(find_group_info, MeetupObjectList)
     assert isinstance(find_group_info[0], MeetupObject)
     assert isinstance(find_group_info[-1], MeetupObject)
